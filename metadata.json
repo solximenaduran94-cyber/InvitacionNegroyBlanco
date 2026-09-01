@@ -1,0 +1,6 @@
+{
+  "name": "Invitación Web Mis 15",
+  "description": "Invitación web interactiva y elegante para fiesta de quince años con cuenta regresiva, confirmación de asistencia, mapa y galería.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
