@@ -37,9 +37,9 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
     <>
       <section
         id="gift-section"
-        className="relative w-full text-neutral-900 py-16 px-6 text-center overflow-hidden border-t border-slate-300"
+        className="relative w-full text-neutral-900 py-16 px-6 text-center overflow-hidden border-t border-[#ecdacb]"
       >
-        {/* Silver Glitter Background */}
+        {/* Champagne Gold & Dusty Rose Glitter Background */}
         <SilverGlitterLayer />
 
         <div className="relative max-w-md mx-auto space-y-6 z-10">
@@ -49,9 +49,9 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="w-14 h-14 mx-auto flex items-center justify-center text-neutral-900"
+            className="w-14 h-14 mx-auto flex items-center justify-center text-[#8c4f5a]"
           >
-            <Gift className="w-10 h-10 stroke-[1.4]" />
+            <Gift className="w-10 h-10 stroke-[1.4] text-[#8c4f5a] filter drop-shadow-[0_0_8px_rgba(223,186,115,0.35)]" />
           </motion.div>
 
           {/* Gift Message */}
@@ -62,7 +62,7 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
             transition={{ duration: 0.6 }}
             className="space-y-4"
           >
-            <p className="text-xs sm:text-sm tracking-[0.2em] font-medium text-neutral-800 uppercase font-montserrat max-w-xs mx-auto leading-relaxed">
+            <p className="text-xs sm:text-sm tracking-[0.2em] font-medium text-[#42222d] uppercase font-montserrat max-w-xs mx-auto leading-relaxed">
               TU PRESENCIA ES MI MEJOR REGALO. SI QUERÉS SUMAR ALGO MÁS…
             </p>
 
@@ -71,21 +71,21 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
               <button
                 id="copy-alias-button"
                 onClick={handleCopyAlias}
-                className="group inline-flex items-center gap-2 px-5 py-2.5 bg-white/90 hover:bg-white backdrop-blur-sm border border-neutral-300 rounded-sm shadow-sm transition-all cursor-pointer hover:shadow"
+                className="group inline-flex items-center gap-2 px-5 py-2.5 bg-white/95 hover:bg-white backdrop-blur-sm border border-[#dfc2a5] rounded-sm shadow-sm transition-all cursor-pointer hover:shadow-md hover:border-[#c7a485]"
                 title="Hacé clic para copiar el Alias"
               >
-                <span className="text-xs sm:text-sm tracking-[0.25em] font-semibold text-neutral-900 uppercase">
+                <span className="text-xs sm:text-sm tracking-[0.25em] font-semibold text-[#1e0e15] uppercase">
                   ALIAS: {alias}
                 </span>
                 {copied ? (
-                  <Check className="w-4 h-4 text-emerald-600 animate-bounce" />
+                  <Check className="w-4 h-4 text-[#8c4f5a] animate-bounce" />
                 ) : (
-                  <Copy className="w-3.5 h-3.5 text-neutral-500 group-hover:text-neutral-900 transition-colors" />
+                  <Copy className="w-3.5 h-3.5 text-[#a8747f] group-hover:text-[#8c4f5a] transition-colors" />
                 )}
               </button>
 
               {copied && (
-                <p className="text-[11px] text-emerald-700 font-medium tracking-wider mt-1.5 animate-fade-in">
+                <p className="text-[11px] text-[#8c4f5a] font-medium tracking-wider mt-1.5 animate-fade-in">
                   ¡Alias copiado al portapapeles!
                 </p>
               )}
@@ -94,15 +94,15 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
             <div>
               <button
                 onClick={() => setShowDetailsModal(true)}
-                className="inline-flex items-center gap-1.5 text-xs text-neutral-600 hover:text-neutral-950 tracking-widest uppercase underline underline-offset-4 cursor-pointer transition-colors"
+                className="inline-flex items-center gap-1.5 text-xs text-[#8c4f5a] hover:text-[#52252f] tracking-widest uppercase underline underline-offset-4 cursor-pointer transition-colors font-medium"
               >
-                <CreditCard className="w-3.5 h-3.5" />
+                <CreditCard className="w-3.5 h-3.5 text-[#dfc2a5]" />
                 Ver datos bancarios completos
               </button>
             </div>
 
             {/* Physical Box in Room Note */}
-            <p className="text-xs tracking-[0.25em] font-medium text-neutral-700 uppercase pt-2 font-montserrat">
+            <p className="text-xs tracking-[0.25em] font-medium text-[#73434f] uppercase pt-2 font-montserrat">
               O HABRÁ UN COFRE EN EL SALÓN
             </p>
           </motion.div>
@@ -117,12 +117,12 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="relative w-full max-w-sm bg-neutral-900 border border-neutral-800 text-white rounded-xl shadow-2xl p-6"
+              className="relative w-full max-w-sm bg-[#180e14] border border-[#3b202c] text-white rounded-xl shadow-2xl p-6"
             >
-              <div className="flex items-center justify-between border-b border-neutral-800 pb-3 mb-4">
+              <div className="flex items-center justify-between border-b border-[#2d1822] pb-3 mb-4">
                 <div className="flex items-center gap-2">
-                  <CreditCard className="w-5 h-5 text-neutral-300" />
-                  <h4 className="text-sm font-cinzel tracking-[0.2em] uppercase font-medium">
+                  <CreditCard className="w-5 h-5 text-[#dfc2a5]" />
+                  <h4 className="text-sm font-cinzel tracking-[0.2em] uppercase font-medium text-[#dfc2a5]">
                     Datos de Transferencia
                   </h4>
                 </div>
@@ -135,17 +135,17 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
               </div>
 
               <div className="space-y-3.5 text-xs">
-                <div className="bg-neutral-950 p-3 rounded border border-neutral-800">
-                  <span className="text-neutral-400 tracking-wider uppercase block text-[10px]">
+                <div className="bg-[#0f080d] p-3 rounded border border-[#2d1822]">
+                  <span className="text-[#dfc2a5] tracking-wider uppercase block text-[10px] font-medium">
                     Alias
                   </span>
                   <div className="flex items-center justify-between mt-0.5">
-                    <span className="font-mono font-semibold text-neutral-100 text-sm">
+                    <span className="font-mono font-semibold text-[#fff9f0] text-sm">
                       {alias}
                     </span>
                     <button
                       onClick={handleCopyAlias}
-                      className="p-1 hover:text-neutral-300 text-neutral-400 transition-colors"
+                      className="p-1 hover:text-[#dfc2a5] text-[#dfc2a5]/80 transition-colors"
                       title="Copiar alias"
                     >
                       <Copy className="w-3.5 h-3.5" />
@@ -154,17 +154,17 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
                 </div>
 
                 {cbu && (
-                  <div className="bg-neutral-950 p-3 rounded border border-neutral-800">
-                    <span className="text-neutral-400 tracking-wider uppercase block text-[10px]">
+                  <div className="bg-[#0f080d] p-3 rounded border border-[#2d1822]">
+                    <span className="text-[#dfc2a5] tracking-wider uppercase block text-[10px] font-medium">
                       CBU / CVU
                     </span>
                     <div className="flex items-center justify-between mt-0.5">
-                      <span className="font-mono text-neutral-100 text-xs break-all">
+                      <span className="font-mono text-[#fff9f0] text-xs break-all">
                         {cbu}
                       </span>
                       <button
                         onClick={handleCopyCbu}
-                        className="p-1 hover:text-neutral-300 text-neutral-400 transition-colors ml-2"
+                        className="p-1 hover:text-[#dfc2a5] text-[#dfc2a5]/80 transition-colors ml-2"
                         title="Copiar CBU"
                       >
                         <Copy className="w-3.5 h-3.5" />
@@ -174,32 +174,32 @@ export const GiftSection: React.FC<GiftSectionProps> = ({
                 )}
 
                 {holder && (
-                  <div className="bg-neutral-950 p-3 rounded border border-neutral-800">
-                    <span className="text-neutral-400 tracking-wider uppercase block text-[10px]">
+                  <div className="bg-[#0f080d] p-3 rounded border border-[#2d1822]">
+                    <span className="text-[#dfc2a5] tracking-wider uppercase block text-[10px] font-medium">
                       Titular
                     </span>
-                    <span className="text-neutral-100 font-medium block mt-0.5">
+                    <span className="text-[#fff9f0] font-medium block mt-0.5">
                       {holder}
                     </span>
                   </div>
                 )}
 
                 {entity && (
-                  <div className="bg-neutral-950 p-3 rounded border border-neutral-800">
-                    <span className="text-neutral-400 tracking-wider uppercase block text-[10px]">
+                  <div className="bg-[#0f080d] p-3 rounded border border-[#2d1822]">
+                    <span className="text-[#dfc2a5] tracking-wider uppercase block text-[10px] font-medium">
                       Entidad / Banco
                     </span>
-                    <span className="text-neutral-100 font-medium block mt-0.5">
+                    <span className="text-[#fff9f0] font-medium block mt-0.5">
                       {entity}
                     </span>
                   </div>
                 )}
               </div>
 
-              <div className="mt-5 pt-3 border-t border-neutral-800 text-center">
+              <div className="mt-5 pt-3 border-t border-[#2d1822] text-center">
                 <button
                   onClick={() => setShowDetailsModal(false)}
-                  className="w-full py-2.5 bg-white text-black text-xs uppercase tracking-widest font-medium rounded hover:bg-neutral-200 transition-colors"
+                  className="w-full py-2.5 bg-gradient-to-r from-[#8c4f5a] via-[#a36770] to-[#8c4f5a] text-[#fff8ee] text-xs uppercase tracking-widest font-medium rounded hover:brightness-110 transition-all border border-[#dfc2a5]/50 cursor-pointer"
                 >
                   Cerrar
                 </button>

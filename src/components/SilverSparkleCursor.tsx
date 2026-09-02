@@ -36,21 +36,24 @@ export const SilverSparkleCursor: React.FC = () => {
     resize();
     window.addEventListener('resize', resize);
 
-    const silverColors = [
+    const champagneRoseColors = [
       '#ffffff',
-      '#f8fafc',
-      '#e2e8f0',
-      '#cbd5e1',
-      '#94a3b8',
-      '#e0f2fe',
-      '#f1f5f9',
+      '#fcf8f2',
+      '#f5ebe0',
+      '#dfc2a5',
+      '#d8ba9c',
+      '#c7a485',
+      '#edd7c4',
+      '#eecfd4',
+      '#d8a5ad',
+      '#c28b93',
     ];
 
     const addParticles = (x: number, y: number, count = 2, isClick = false) => {
       for (let i = 0; i < count; i++) {
         const angle = Math.random() * Math.PI * 2;
         const speed = isClick ? Math.random() * 4 + 1.5 : Math.random() * 1.8 + 0.3;
-        const color = silverColors[Math.floor(Math.random() * silverColors.length)];
+        const color = champagneRoseColors[Math.floor(Math.random() * champagneRoseColors.length)];
         const shapes: ('star' | 'circle' | 'sparkle')[] = ['star', 'sparkle', 'circle'];
         const shape = shapes[Math.floor(Math.random() * shapes.length)];
 
@@ -122,8 +125,8 @@ export const SilverSparkleCursor: React.FC = () => {
       c.rotate(rotation);
       c.globalAlpha = alpha;
       c.fillStyle = color;
-      c.shadowColor = '#ffffff';
-      c.shadowBlur = 4;
+      c.shadowColor = '#dfba73';
+      c.shadowBlur = 5;
 
       c.beginPath();
       c.moveTo(0, -size);

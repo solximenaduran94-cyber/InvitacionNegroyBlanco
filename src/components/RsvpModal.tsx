@@ -27,6 +27,7 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
   const [songSuggestion, setSongSuggestion] = useState('');
   const [message, setMessage] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [generatedWaUrl, setGeneratedWaUrl] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -37,7 +38,7 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
         particleCount: 80,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#000000', '#737373', '#d4d4d4', '#ffffff', '#38bdf8'],
+        colors: ['#caa684', '#dfc2a5', '#fbf4ec', '#d8a5ad', '#c28b93', '#ffffff'],
       });
     }
 
@@ -57,24 +58,37 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
       onSaveRsvp(entry);
     }
 
-    // Build WhatsApp message
-    const statusText = attending ? '✅ Confirmo mi asistencia' : '❌ Lamentablemente no podré asistir';
-    const dietText = dietary !== 'Ninguna' ? `\n🥗 Menú especial: ${dietary === 'Otra' ? customDietary : dietary}` : '';
-    const compText = attending ? `\n👥 Cantidad de personas: ${companionsCount}` : '';
-    const songText = songSuggestion ? `\n🎵 Canción que no puede faltar: ${songSuggestion}` : '';
-    const noteText = message ? `\n💬 Mensaje: "${message}"` : '';
+    // Build clean WhatsApp message without icons or emojis, highly legible
+    const lines: string[] = [];
 
-    const textToSend = `*Confirmación de Asistencia - Mis 15 de ${celebrantName}*\n\n` +
-      `👤 *Nombre:* ${fullName.trim()}\n` +
-      `📌 *Estado:* ${statusText}` +
-      compText +
-      dietText +
-      songText +
-      noteText;
+    lines.push(`Confirmación de Asistencia - Mis 15 de ${celebrantName}\n`);
+    lines.push(`Nombre y Apellido: ${fullName.trim()}`);
+
+    if (attending) {
+      lines.push(`Asistencia: Sí, confirmo mi asistencia`);
+      lines.push(`Cantidad de personas: ${companionsCount}`);
+
+      if (dietary && dietary !== 'Ninguna') {
+        const dietValue = dietary === 'Otra' ? (customDietary.trim() || 'Restricción especificada') : dietary;
+        lines.push(`Preferencia de menú: ${dietValue}`);
+      }
+
+      if (songSuggestion.trim()) {
+        lines.push(`Canción sugerida: ${songSuggestion.trim()}`);
+      }
+    } else {
+      lines.push(`Asistencia: No podré asistir`);
+    }
+
+    if (message.trim()) {
+      lines.push(`Mensaje: ${message.trim()}`);
+    }
+
+    const textToSend = lines.join('\n');
 
     const cleanPhone = whatsappNumber.replace(/[^0-9]/g, '');
     const waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(textToSend)}`;
-
+    setGeneratedWaUrl(waUrl);
     setIsSubmitted(true);
 
     // Give a moment before option to open WhatsApp
@@ -97,21 +111,21 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ duration: 0.25 }}
-            className="relative w-full max-w-lg bg-neutral-900 border border-neutral-800 text-white rounded-xl shadow-2xl overflow-hidden my-8"
+            className="relative w-full max-w-lg bg-[#180e14] border border-[#3b202c] text-white rounded-xl shadow-2xl overflow-hidden my-8"
           >
             {/* Header */}
-            <div className="px-6 py-5 border-b border-neutral-800 flex items-center justify-between bg-neutral-950/60">
+            <div className="px-6 py-5 border-b border-[#2d1822] flex items-center justify-between bg-[#12090e]">
               <div>
-                <h3 className="text-lg font-cinzel tracking-[0.2em] font-medium text-white uppercase">
+                <h3 className="text-lg font-cinzel tracking-[0.2em] font-medium text-[#dfc2a5] uppercase">
                   Confirmar Asistencia
                 </h3>
-                <p className="text-xs text-neutral-400 font-light tracking-wider mt-0.5">
+                <p className="text-xs text-[#d8a5ad] font-light tracking-wider mt-0.5">
                   Mis 15 de {celebrantName}
                 </p>
               </div>
               <button
                 onClick={onClose}
-                className="p-1.5 text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-full transition-colors"
+                className="p-1.5 text-neutral-400 hover:text-white hover:bg-[#2d1822] rounded-full transition-colors"
                 aria-label="Cerrar modal"
               >
                 <X className="w-5 h-5" />
@@ -122,19 +136,30 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
             <div className="p-6">
               {isSubmitted ? (
                 <div className="text-center py-8 space-y-4">
-                  <div className="w-16 h-16 bg-neutral-800 border border-neutral-700 text-white rounded-full flex items-center justify-center mx-auto shadow-inner">
+                  <div className="w-16 h-16 bg-[#2a1722] border border-[#dfc2a5]/50 text-[#dfc2a5] rounded-full flex items-center justify-center mx-auto shadow-inner">
                     <Check className="w-8 h-8" />
                   </div>
-                  <h4 className="text-xl font-cinzel tracking-wider text-white">
+                  <h4 className="text-xl font-cinzel tracking-wider text-[#dfc2a5]">
                     ¡Muchas Gracias!
                   </h4>
-                  <p className="text-sm text-neutral-300 font-light max-w-xs mx-auto leading-relaxed">
-                    Tu confirmación ha sido registrada. Se abrirá WhatsApp para enviar tu mensaje a la agasajada.
+                  <p className="text-sm text-[#f6edf0] font-light max-w-xs mx-auto leading-relaxed">
+                    Tu confirmación ha sido guardada. Si WhatsApp no se abrió automáticamente, podés hacer clic abajo para enviar tu mensaje a <span className="font-medium text-[#dfc2a5]">{whatsappNumber}</span>:
                   </p>
-                  <div className="pt-4">
+                  <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
+                    {generatedWaUrl && (
+                      <a
+                        href={generatedWaUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full sm:w-auto px-6 py-2.5 bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs tracking-widest uppercase font-semibold rounded flex items-center justify-center gap-2 shadow-md transition-colors"
+                      >
+                        <MessageSquare className="w-4 h-4" />
+                        Abrir WhatsApp
+                      </a>
+                    )}
                     <button
                       onClick={handleReset}
-                      className="px-6 py-2.5 bg-white text-black text-xs tracking-widest uppercase font-medium rounded hover:bg-neutral-200 transition-colors"
+                      className="w-full sm:w-auto px-6 py-2.5 bg-gradient-to-r from-[#caa684] via-[#dfc2a5] to-[#caa684] text-[#1a0c13] text-xs tracking-widest uppercase font-semibold rounded hover:brightness-105 transition-colors"
                     >
                       Cerrar
                     </button>
@@ -144,7 +169,7 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
                 <form onSubmit={handleSubmit} className="space-y-5">
                   {/* Name Input */}
                   <div>
-                    <label className="block text-xs uppercase tracking-widest text-neutral-300 font-medium mb-1.5">
+                    <label className="block text-xs uppercase tracking-widest text-[#dfc2a5] font-medium mb-1.5">
                       Nombre y Apellido *
                     </label>
                     <input
@@ -153,13 +178,13 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
                       placeholder="Ej. Martín Pérez"
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-neutral-950 border border-neutral-700 rounded text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-neutral-400 transition-colors"
+                      className="w-full px-3.5 py-2.5 bg-[#0f080d] border border-[#3b202c] rounded text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-[#dfc2a5] transition-colors"
                     />
                   </div>
 
                   {/* Attendance Choice */}
                   <div>
-                    <label className="block text-xs uppercase tracking-widest text-neutral-300 font-medium mb-2">
+                    <label className="block text-xs uppercase tracking-widest text-[#dfc2a5] font-medium mb-2">
                       ¿Asistirás a la fiesta? *
                     </label>
                     <div className="grid grid-cols-2 gap-3">
@@ -168,8 +193,8 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
                         onClick={() => setAttending(true)}
                         className={`py-3 px-4 rounded border text-xs tracking-wider uppercase font-medium flex items-center justify-center gap-2 transition-all cursor-pointer ${
                           attending === true
-                            ? 'bg-white text-black border-white shadow-sm'
-                            : 'bg-neutral-950 text-neutral-400 border-neutral-800 hover:border-neutral-700'
+                            ? 'bg-gradient-to-r from-[#caa684] via-[#f7eee2] to-[#caa684] text-[#24131b] border-[#caa684] shadow-md font-semibold'
+                            : 'bg-[#0f080d] text-neutral-400 border-[#3b202c] hover:border-[#dfc2a5]/50'
                         }`}
                       >
                         <Check className="w-4 h-4" />
@@ -180,8 +205,8 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
                         onClick={() => setAttending(false)}
                         className={`py-3 px-4 rounded border text-xs tracking-wider uppercase font-medium flex items-center justify-center gap-2 transition-all cursor-pointer ${
                           attending === false
-                            ? 'bg-neutral-800 text-white border-neutral-600 shadow-sm'
-                            : 'bg-neutral-950 text-neutral-400 border-neutral-800 hover:border-neutral-700'
+                            ? 'bg-[#2a1722] text-[#f6edf0] border-[#c28b93] shadow-sm'
+                            : 'bg-[#0f080d] text-neutral-400 border-[#3b202c] hover:border-neutral-700'
                         }`}
                       >
                         <X className="w-4 h-4" />
@@ -195,13 +220,13 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
                       {/* Companions */}
                       <div>
                         <label className="block text-xs uppercase tracking-widest text-neutral-300 font-medium mb-1.5 flex items-center gap-1.5">
-                          <Users className="w-3.5 h-3.5 text-neutral-400" />
+                          <Users className="w-3.5 h-3.5 text-[#dfc2a5]" />
                           Cantidad de personas
                         </label>
                         <select
                           value={companionsCount}
                           onChange={(e) => setCompanionsCount(e.target.value)}
-                          className="w-full px-3.5 py-2.5 bg-neutral-950 border border-neutral-700 rounded text-sm text-white focus:outline-none focus:border-neutral-400 transition-colors"
+                          className="w-full px-3.5 py-2.5 bg-[#0f080d] border border-[#3b202c] rounded text-sm text-white focus:outline-none focus:border-[#dfc2a5] transition-colors"
                         >
                           <option value="1">1 Persona (Solo yo)</option>
                           <option value="2">2 Personas</option>
@@ -214,13 +239,13 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
                       {/* Dietary requirements */}
                       <div>
                         <label className="block text-xs uppercase tracking-widest text-neutral-300 font-medium mb-1.5 flex items-center gap-1.5">
-                          <Utensils className="w-3.5 h-3.5 text-neutral-400" />
+                          <Utensils className="w-3.5 h-3.5 text-[#dfc2a5]" />
                           Preferencia de Menú / Restricción
                         </label>
                         <select
                           value={dietary}
                           onChange={(e) => setDietary(e.target.value)}
-                          className="w-full px-3.5 py-2.5 bg-neutral-950 border border-neutral-700 rounded text-sm text-white focus:outline-none focus:border-neutral-400 transition-colors"
+                          className="w-full px-3.5 py-2.5 bg-[#0f080d] border border-[#3b202c] rounded text-sm text-white focus:outline-none focus:border-[#dfc2a5] transition-colors"
                         >
                           <option value="Ninguna">Menú estándar / Ninguna</option>
                           <option value="Celíaco (Sin TACC)">Celíaco / Sin TACC</option>
@@ -236,7 +261,7 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
                             placeholder="Especificar alergia o restricción..."
                             value={customDietary}
                             onChange={(e) => setCustomDietary(e.target.value)}
-                            className="mt-2 w-full px-3.5 py-2 bg-neutral-950 border border-neutral-700 rounded text-sm text-white focus:outline-none focus:border-neutral-400"
+                            className="mt-2 w-full px-3.5 py-2 bg-[#0f080d] border border-[#3b202c] rounded text-sm text-white focus:outline-none focus:border-[#dfc2a5]"
                           />
                         )}
                       </div>
@@ -244,7 +269,7 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
                       {/* Song Request */}
                       <div>
                         <label className="block text-xs uppercase tracking-widest text-neutral-300 font-medium mb-1.5 flex items-center gap-1.5">
-                          <Music className="w-3.5 h-3.5 text-neutral-400" />
+                          <Music className="w-3.5 h-3.5 text-[#dfc2a5]" />
                           ¿Qué tema querés que suene en la fiesta?
                         </label>
                         <input
@@ -252,7 +277,7 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
                           placeholder="Ej: Tití me preguntó - Bad Bunny"
                           value={songSuggestion}
                           onChange={(e) => setSongSuggestion(e.target.value)}
-                          className="w-full px-3.5 py-2.5 bg-neutral-950 border border-neutral-700 rounded text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-neutral-400 transition-colors"
+                          className="w-full px-3.5 py-2.5 bg-[#0f080d] border border-[#3b202c] rounded text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-[#dfc2a5] transition-colors"
                         />
                       </div>
                     </>
@@ -261,7 +286,7 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
                   {/* Message for celebrant */}
                   <div>
                     <label className="block text-xs uppercase tracking-widest text-neutral-300 font-medium mb-1.5 flex items-center gap-1.5">
-                      <MessageSquare className="w-3.5 h-3.5 text-neutral-400" />
+                      <MessageSquare className="w-3.5 h-3.5 text-[#dfc2a5]" />
                       Dedicatoria o mensaje (opcional)
                     </label>
                     <textarea
@@ -269,7 +294,7 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
                       placeholder="Dejale unas palabras a la quinceañera..."
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
-                      className="w-full px-3.5 py-2 bg-neutral-950 border border-neutral-700 rounded text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-neutral-400 resize-none"
+                      className="w-full px-3.5 py-2 bg-[#0f080d] border border-[#3b202c] rounded text-sm text-white placeholder-neutral-500 focus:outline-none focus:border-[#dfc2a5] resize-none"
                     />
                   </div>
 
@@ -277,9 +302,9 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
                   <div className="pt-2">
                     <button
                       type="submit"
-                      className="w-full py-3.5 px-4 bg-white text-black text-xs sm:text-sm font-medium tracking-[0.2em] uppercase rounded hover:bg-neutral-200 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg"
+                      className="w-full py-3.5 px-4 bg-gradient-to-r from-[#caa684] via-[#f7eee2] to-[#caa684] text-[#24131b] text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase rounded hover:brightness-105 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg border border-[#caa684]/50"
                     >
-                      <Sparkles className="w-4 h-4" />
+                      <Sparkles className="w-4 h-4 text-[#8c4f5a]" />
                       Enviar Confirmación
                     </button>
                   </div>

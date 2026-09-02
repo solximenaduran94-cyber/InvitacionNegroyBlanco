@@ -31,12 +31,12 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-100 flex justify-center selection:bg-neutral-200 selection:text-neutral-950 font-montserrat">
-      {/* Interactive Silver Sparkle Particle Trail & Burst on Click/Touch */}
+    <div className="min-h-screen bg-[#080406] text-neutral-100 flex justify-center selection:bg-[#dfc2a5] selection:text-[#180e14] font-montserrat">
+      {/* Interactive Champagne Gold & Dusty Rose Sparkle Particle Trail & Burst on Click/Touch */}
       <SilverSparkleCursor />
 
       {/* Mobile-first centered invitation container (max-w-md / max-w-lg) matching real mobile web invitation design */}
-      <main className="w-full max-w-lg bg-black min-h-screen shadow-2xl relative flex flex-col pb-8">
+      <main className="w-full max-w-lg bg-[#0d070a] min-h-screen shadow-2xl relative flex flex-col pb-8">
         {/* 1. Hero Cover (Page 1 in PDF) */}
         <HeroCover
           name={data.celebrantName}
@@ -46,7 +46,10 @@ export default function App() {
         />
 
         {/* 2. Top Interactive Music Player (Page 2 in PDF) */}
-        <MusicPlayer trackName={data.audioTrackName} />
+        <MusicPlayer
+          trackName={data.audioTrackName}
+          audioUrl={data.audioTrackUrl}
+        />
 
         {/* 3. Emotional Message Block (Page 2 in PDF) */}
         <MessageSection message={data.messageText} />
@@ -91,14 +94,17 @@ export default function App() {
         />
 
         {/* 9. Post-Party Photo Sharing / Subilas Acá (Page 5 in PDF) */}
-        <PhotoUploadSection celebrantName={data.celebrantName} />
+        <PhotoUploadSection
+          celebrantName={data.celebrantName}
+          driveFolderUrl={data.driveFolderUrl}
+        />
 
         {/* Floating Back to Top Button */}
         <button
           id="scroll-to-top-button"
           onClick={scrollToTop}
           aria-label="Volver arriba"
-          className="fixed bottom-5 right-5 z-40 p-3 bg-black/80 hover:bg-black text-white rounded-full shadow-lg backdrop-blur-sm border border-neutral-700 hover:scale-110 active:scale-95 transition-all cursor-pointer"
+          className="fixed bottom-5 right-5 z-40 p-3 bg-[#1a0c13]/90 hover:bg-[#2a141f] text-[#dfc2a5] rounded-full shadow-[0_4px_20px_rgba(0,0,0,0.5)] backdrop-blur-sm border border-[#dfc2a5]/50 hover:scale-110 active:scale-95 transition-all cursor-pointer"
         >
           <ArrowUp className="w-4 h-4" />
         </button>

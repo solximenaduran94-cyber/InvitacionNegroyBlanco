@@ -21,8 +21,10 @@ export interface InvitationData {
   coverImage: string;
   childhoodImage: string;
   audioTrackName: string;
+  audioTrackUrl?: string;
   instagramUser?: string;
   tiktokUser?: string;
+  driveFolderUrl?: string;
 }
 
 export interface RsvpEntry {

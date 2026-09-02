@@ -15,8 +15,8 @@ export const Mis15Badge: React.FC<Mis15BadgeProps> = ({
   theme = 'light',
 }) => {
   const isDark = theme === 'dark';
-  const textColor = isDark ? '#ffffff' : '#4b5563';
-  const heartColor = isDark ? '#ffffff' : '#374151';
+  const textColor = isDark ? '#dfc2a5' : '#8c594d';
+  const heartColor = isDark ? '#d8a5ad' : '#a36770';
 
   // Repeated text for circular path
   const repeatingText = `• ${text} • ${text} • ${text} • ${text} `;
