@@ -15,12 +15,11 @@ import { DressCodeSection } from './components/DressCodeSection';
 import { RsvpSection } from './components/RsvpSection';
 import { GiftSection } from './components/GiftSection';
 import { PhotoUploadSection } from './components/PhotoUploadSection';
-import { EditDataDrawer } from './components/EditDataDrawer';
 import { SilverSparkleCursor } from './components/SilverSparkleCursor';
 import { ArrowUp } from 'lucide-react';
 
 export default function App() {
-  const [data, setData] = useState<InvitationData>(defaultInvitationData);
+  const [data] = useState<InvitationData>(defaultInvitationData);
   const [rsvps, setRsvps] = useState<RsvpEntry[]>([]);
 
   const handleSaveRsvp = (entry: RsvpEntry) => {
@@ -103,9 +102,6 @@ export default function App() {
         >
           <ArrowUp className="w-4 h-4" />
         </button>
-
-        {/* Floating Customizer Drawer */}
-        <EditDataDrawer data={data} onChange={setData} />
       </main>
     </div>
   );
