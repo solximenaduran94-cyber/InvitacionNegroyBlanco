@@ -86,7 +86,10 @@ export const RsvpModal: React.FC<RsvpModalProps> = ({
 
     const textToSend = lines.join('\n');
 
-    const cleanPhone = whatsappNumber.replace(/[^0-9]/g, '');
+    let cleanPhone = whatsappNumber.replace(/[^0-9]/g, '');
+    if (cleanPhone.length === 10) {
+      cleanPhone = `549${cleanPhone}`;
+    }
     const waUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(textToSend)}`;
     setGeneratedWaUrl(waUrl);
     setIsSubmitted(true);

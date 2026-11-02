@@ -17,7 +17,7 @@ export const defaultInvitationData: InvitationData = {
   scheduleTime: '21:00 A 05:00 HS',
   dressCode: 'ELEGANTE',
   dressCodeSubtext: 'Reservando el color dorado y rosa viejo',
-  whatsappNumber: '+54 9 2215 58-9928',
+  whatsappNumber: '+54 9 221 579-3326',
   bankAlias: 'xioma.lopez',
   bankCbu: '0140190103520753461934',
   bankHolder: 'Xiomara Lopez',
